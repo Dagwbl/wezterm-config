@@ -1,94 +1,132 @@
--- A slightly altered version of catppucchin mocha
+-- Catppuccin Latte and Macchiato for Wezterm
 -- stylua: ignore
-local mocha = {
+
+-- Light theme (Latte)
+local latte = {
+   rosewater = '#dc8a78',
+   flamingo  = '#dd7878',
+   pink      = '#ea76cb',
+   mauve     = '#8839ef',
+   red       = '#d20f39',
+   maroon    = '#e64553',
+   peach     = '#fe640b',
+   yellow    = '#df8e1d',
+   green     = '#40a02b',
+   teal      = '#179299',
+   sky       = '#04a5e5',
+   sapphire  = '#209fb5',
+   blue      = '#1e66f5',
+   lavender  = '#7287fd',
+   text      = '#4c4c4c',
+   subtext1  = '#5c5f77',
+   subtext0  = '#737487',
+   overlay2  = '#9099b2',
+   overlay1  = '#8c8fa1',
+   overlay0  = '#7d7f99',
+   surface2  = '#bccddc',
+   surface1  = '#ccd4e3',
+   surface0  = '#dce0e8',
+   base      = '#fdf6e3',
+   mantle    = '#eee8d5',
+   crust     = '#ddd6c1',
+}
+
+-- Dark theme (Macchiato)
+local macchiato = {
    rosewater = '#f5e0dc',
-   flamingo  = '#f2cdcd',
-   pink      = '#f5c2e7',
-   mauve     = '#cba6f7',
-   red       = '#f38ba8',
-   maroon    = '#eba0ac',
-   peach     = '#fab387',
-   yellow    = '#f9e2af',
-   green     = '#a6e3a1',
-   teal      = '#94e2d5',
-   sky       = '#89dceb',
-   sapphire  = '#74c7ec',
-   blue      = '#89b4fa',
-   lavender  = '#b4befe',
-   text      = '#cdd6f4',
-   subtext1  = '#bac2de',
-   subtext0  = '#a6adc8',
-   overlay2  = '#9399b2',
-   overlay1  = '#7f849c',
-   overlay0  = '#6c7086',
-   surface2  = '#585b70',
-   surface1  = '#45475a',
-   surface0  = '#313244',
-   base      = '#1f1f28',
-   mantle    = '#181825',
-   crust     = '#11111b',
+   flamingo = '#f2cdcd',
+   pink = '#f5c2e7',
+   mauve = '#cba6f7',
+   red = '#f38ba8',
+   maroon = '#eba0ac',
+   peach = '#fab387',
+   yellow = '#f9e2af',
+   green = '#a6e3a1',
+   teal = '#94e2d5',
+   sky = '#89dceb',
+   sapphire = '#74c7ec',
+   blue = '#89b4fa',
+   lavender = '#b4befe',
+   text = '#cdd6f4',
+   subtext1 = '#bac2de',
+   subtext0 = '#a6adc8',
+   overlay2 = '#9399b2',
+   overlay1 = '#7f849c',
+   overlay0 = '#6c7086',
+   surface2 = '#585b70',
+   surface1 = '#45475a',
+   surface0 = '#313244',
+   base = '#1e1e2e',
+   mantle = '#181825',
+   crust = '#11111b',
 }
 
-local colorscheme = {
-   foreground = mocha.text,
-   background = mocha.base,
-   cursor_bg = mocha.rosewater,
-   cursor_border = mocha.rosewater,
-   cursor_fg = mocha.crust,
-   selection_bg = mocha.surface2,
-   selection_fg = mocha.text,
-   ansi = {
-      '#0C0C0C', -- black
-      '#C50F1F', -- red
-      '#13A10E', -- green
-      '#C19C00', -- yellow
-      '#0037DA', -- blue
-      '#881798', -- magenta/purple
-      '#3A96DD', -- cyan
-      '#CCCCCC', -- white
-   },
-   brights = {
-      '#767676', -- black
-      '#E74856', -- red
-      '#16C60C', -- green
-      '#F9F1A5', -- yellow
-      '#3B78FF', -- blue
-      '#B4009E', -- magenta/purple
-      '#61D6D6', -- cyan
-      '#F2F2F2', -- white
-   },
-   tab_bar = {
-      background = 'rgba(0, 0, 0, 0.4)',
-      active_tab = {
-         bg_color = mocha.surface2,
-         fg_color = mocha.text,
+local function create_colorscheme(theme)
+   local c = theme
+   return {
+      foreground = c.text,
+      background = c.base,
+      cursor_bg = c.rosewater,
+      cursor_border = c.rosewater,
+      cursor_fg = c.crust,
+      selection_bg = c.surface2,
+      selection_fg = c.text,
+      ansi = {
+         c.mantle,
+         c.red,
+         c.green,
+         c.yellow,
+         c.blue,
+         c.mauve,
+         c.teal,
+         c.crust,
       },
-      inactive_tab = {
-         bg_color = mocha.surface0,
-         fg_color = mocha.subtext1,
+      brights = {
+         c.overlay0,
+         c.red,
+         c.green,
+         c.yellow,
+         c.blue,
+         c.mauve,
+         c.sky,
+         c.text,
       },
-      inactive_tab_hover = {
-         bg_color = mocha.surface0,
-         fg_color = mocha.text,
+      tab_bar = {
+         background = 'rgba(0, 0, 0, 0.2)',
+         active_tab = {
+            bg_color = c.blue,
+            fg_color = c.crust,
+         },
+         inactive_tab = {
+            bg_color = c.mantle,
+            fg_color = c.subtext1,
+         },
+         inactive_tab_hover = {
+            bg_color = c.peach,
+            fg_color = c.crust,
+         },
+         new_tab = {
+            bg_color = c.base,
+            fg_color = c.text,
+         },
+         new_tab_hover = {
+            bg_color = c.mantle,
+            fg_color = c.text,
+            italic = true,
+         },
       },
-      new_tab = {
-         bg_color = mocha.base,
-         fg_color = mocha.text,
+      visual_bell = c.yellow,
+      indexed = {
+         [16] = c.peach,
+         [17] = c.rosewater,
       },
-      new_tab_hover = {
-         bg_color = mocha.mantle,
-         fg_color = mocha.text,
-         italic = true,
-      },
-   },
-   visual_bell = mocha.red,
-   indexed = {
-      [16] = mocha.peach,
-      [17] = mocha.rosewater,
-   },
-   scrollbar_thumb = mocha.surface2,
-   split = mocha.overlay0,
-   compose_cursor = mocha.flamingo,
-}
+      scrollbar_thumb = c.surface1,
+      split = c.overlay0,
+      compose_cursor = c.flamingo,
+   }
+end
 
-return colorscheme
+return {
+   latte = create_colorscheme(latte),
+   macchiato = create_colorscheme(macchiato),
+}

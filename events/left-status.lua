@@ -14,8 +14,8 @@ local GLYPH_KEY = nf.md_key --[[ '󰌆' ]]
 
 ---@type table<string, Cells.SegmentColors>
 local colors = {
-   default = { bg = '#fab387', fg = '#1c1b19' },
-   scircle = { bg = 'rgba(0, 0, 0, 0.4)', fg = '#fab387' },
+   default = { bg = '#fe640b', fg = '#fdf6e3' },
+   scircle = { bg = 'rgba(238, 232, 213, 0.3)', fg = '#fe640b' },
 }
 
 local cells = Cells:new()

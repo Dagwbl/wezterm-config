@@ -1,6 +1,6 @@
 ---@type Wezterm
 local wezterm = require('wezterm')
-local colors = require('colors.custom')
+local colors = require('colors.custom').latte
 
 -- Seeding random numbers before generating for use
 -- Known issue with lua math library
@@ -64,18 +64,37 @@ end
 ---@private
 ---@return table
 function BackDrops:_gen_opts()
+   if #self.images == 0 then
+      return {
+         {
+            source = { Color = colors.background },
+            height = '100%',
+            width = '100%',
+         },
+      }
+   end
+
+   local img = self.images[self.current_idx]
+   if not img or img == '' then
+      return {
+         {
+            source = { Color = colors.background },
+            height = '100%',
+            width = '100%',
+         },
+      }
+   end
+
    return {
       {
-         source = { File = self.images[self.current_idx] },
+         source = { File = img },
          horizontal_align = 'Center',
       },
       {
          source = { Color = colors.background },
-         height = '120%',
-         width = '120%',
-         vertical_offset = '-10%',
-         horizontal_offset = '-10%',
-         opacity = 0.96,
+         height = '100%',
+         width = '100%',
+         opacity = 0.97,
       },
    }
 end
@@ -87,11 +106,8 @@ function BackDrops:_gen_no_img_opts()
    return {
       {
          source = { Color = colors.background },
-         height = '120%',
-         width = '120%',
-         vertical_offset = '-10%',
-         horizontal_offset = '-10%',
-         opacity = 1,
+         height = '100%',
+         width = '100%',
       },
    }
 end

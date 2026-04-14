@@ -1,9 +1,14 @@
 local Config = require('config')
+local wezterm = require('wezterm')
+local colors = require('colors.custom')
 
-require('utils.backdrops')
-   -- :set_images_dir(require('wezterm').home_dir .. '/Pictures/Wallpapers/')
-   :scan_images_dir()
-   :random()
+local current_theme = 'latte'
+
+local backdrops = require('utils.backdrops')
+backdrops:scan_images_dir()
+
+local bg_options = backdrops:initial_options({ no_img = false })
+backdrops:random()
 
 require('events.left-status').setup()
 require('events.right-status').setup({ date_format = '%a %H:%M:%S' })
@@ -15,7 +20,27 @@ require('events.tab-title').setup({
 require('events.new-tab-button').setup()
 require('events.gui-startup').setup()
 
+wezterm.on('toggle-theme', function(window)
+   current_theme = current_theme == 'latte' and 'macchiato' or 'latte'
+   window:set_config_overrides({
+      colors = colors[current_theme],
+   })
+   backdrops:random(window)
+end)
+
+local bg = bg_options or {
+   {
+      source = { Color = colors.latte.background },
+      height = '100%',
+      width = '100%',
+   },
+}
+
 return Config:init()
+   :append({
+      colors = colors.latte,
+      background = bg,
+   })
    :append(require('config.appearance'))
    :append(require('config.bindings'))
    :append(require('config.domains'))

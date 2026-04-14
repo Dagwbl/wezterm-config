@@ -154,13 +154,20 @@ local keys = {
          end),
       }),
    },
-   {
-      key = 'b',
-      mods = mod.SUPER,
-      action = wezterm.action_callback(function(window, _pane)
-         backdrops:toggle_focus(window)
-      end)
-   },
+    {
+       key = 'b',
+       mods = mod.SUPER,
+       action = wezterm.action_callback(function(window, _pane)
+          backdrops:toggle_focus(window)
+       end)
+    },
+
+    -- theme toggle --
+    {
+       key = 'T',
+       mods = mod.SUPER,
+       action = act.EmitEvent('toggle-theme'),
+    },
 
    -- panes --
    -- panes: split panes

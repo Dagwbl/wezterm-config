@@ -151,6 +151,51 @@ local RV = {
    { RS.scircle_left, RS.padding, RS.icon, RS.padding, RS.title, RS.padding, RS.progress, RS.padding, RS.unseen_output, RS.padding, RS.scircle_right },
 }
 
+-- stylua: ignore
+---@type table<string, Cells.SegmentColors>
+local colors = {
+   text_default          = { bg = '#dce0e8', fg = '#4c4c4c' },
+   text_hover            = { bg = '#ccd4e3', fg = '#4c4c4c' },
+   text_active           = { bg = '#1e66f5', fg = '#fdf6e3' },
+
+   unseen_output_default = { bg = '#dce0e8', fg = '#fe640b' },
+   unseen_output_hover   = { bg = '#ccd4e3', fg = '#fe640b' },
+   unseen_output_active  = { bg = '#1e66f5', fg = '#fe640b' },
+
+   scircle_default       = { bg = 'rgba(238, 232, 213, 0.4)', fg = '#dce0e8' },
+   scircle_hover         = { bg = 'rgba(238, 232, 213, 0.4)', fg = '#ccd4e3' },
+   scircle_active        = { bg = 'rgba(238, 232, 213, 0.4)', fg = '#1e66f5' },
+
+   progress_percentage_default    = { bg = '#dce0e8', fg = '#40a02b' },
+   progress_percentage_hover      = { bg = '#ccd4e3', fg = '#40a02b' },
+   progress_percentage_active     = { bg = '#1e66f5', fg = '#40a02b' },
+
+   progress_error_default         = { bg = '#dce0e8', fg = '#d20f39' },
+   progress_error_hover           = { bg = '#ccd4e3', fg = '#d20f39' },
+   progress_error_active          = { bg = '#1e66f5', fg = '#d20f39' },
+
+   progress_indeterminate_default = { bg = '#dce0e8', fg = '#dc8a78' },
+   progress_indeterminate_hover   = { bg = '#ccd4e3', fg = '#dc8a78' },
+   progress_indeterminate_active  = { bg = '#1e66f5', fg = '#dc8a78' },
+}
+
+-- stylua: ignore
+-- luacheck: ignore
+---Render Variants
+local RV = {
+   { RS.scircle_left, RS.padding, RS.title, RS.padding, RS.scircle_right },
+   { RS.scircle_left, RS.padding, RS.title, RS.padding, RS.unseen_output, RS.padding, RS.scircle_right },
+
+   { RS.scircle_left, RS.padding, RS.title, RS.padding, RS.progress, RS.padding, RS.scircle_right },
+   { RS.scircle_left, RS.padding, RS.title, RS.padding, RS.progress, RS.padding, RS.unseen_output, RS.padding, RS.scircle_right },
+
+   { RS.scircle_left, RS.padding, RS.icon, RS.padding, RS.title, RS.padding, RS.scircle_right },
+   { RS.scircle_left, RS.padding, RS.icon, RS.padding, RS.title, RS.padding, RS.unseen_output, RS.padding, RS.scircle_right },
+
+   { RS.scircle_left, RS.padding, RS.icon, RS.padding, RS.title, RS.padding, RS.progress, RS.padding, RS.scircle_right },
+   { RS.scircle_left, RS.padding, RS.icon, RS.padding, RS.title, RS.padding, RS.progress, RS.padding, RS.unseen_output, RS.padding, RS.scircle_right },
+}
+
 
 ---@type table<string, Cells.SegmentColors>
 -- stylua: ignore
