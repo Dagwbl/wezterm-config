@@ -25,6 +25,7 @@ wezterm.on('toggle-theme', function(window)
    window:set_config_overrides({
       colors = colors[current_theme],
    })
+   backdrops:set_theme(current_theme)
    backdrops:random(window)
 end)
 

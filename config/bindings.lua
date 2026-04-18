@@ -187,10 +187,10 @@ local keys = {
    { key = 'w',     mods = mod.SUPER,     action = act.CloseCurrentPane({ confirm = false }) },
 
    -- panes: navigation
-   { key = 'k',     mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Up') },
-   { key = 'j',     mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Down') },
-   { key = 'h',     mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Left') },
-   { key = 'l',     mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Right') },
+   { key = 'k',     mods = 'CTRL', action = act.ActivatePaneDirection('Up') },
+   { key = 'j',     mods = 'CTRL', action = act.ActivatePaneDirection('Down') },
+   { key = 'h',     mods = 'CTRL', action = act.ActivatePaneDirection('Left') },
+   { key = 'l',     mods = 'CTRL', action = act.ActivatePaneDirection('Right') },
    {
       key = 'p',
       mods = mod.SUPER_REV,
