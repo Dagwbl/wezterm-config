@@ -100,7 +100,7 @@ function BackDrops:_gen_opts()
          source = { Color = colors.background },
          height = '100%',
          width = '100%',
-         opacity = self.current_opacity or 0.98,
+         opacity = self.current_opacity or 0.97,
       },
    }
 end
@@ -204,7 +204,7 @@ end
 
 function BackDrops:set_theme(theme)
    colors = schemes[get_scheme_name(theme)]
-   self.current_opacity = 0.99
+   self.current_opacity = 0.97
 end
 
 ---Toggle the focus mode

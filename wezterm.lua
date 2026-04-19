@@ -51,10 +51,17 @@ local bg = bg_options or {
    },
 }
 
+local tab_bar_colors = fallback_bg.tab_bar
+
 return Config:init()
    :append({
       color_scheme = color_scheme,
       background = bg,
+      colors = {
+         tab_bar = {
+            background = 'rgba(0, 0, 0, 0)',
+            },
+      },
    })
    :append(require('config.appearance'))
    :append(require('config.bindings'))
