@@ -1,8 +1,14 @@
 local Config = require('config')
 local wezterm = require('wezterm')
-local colors = require('colors.custom')
 
-local current_theme = 'latte'
+local function get_scheme_for_appearance(appearance)
+   if appearance:find('Dark') then
+      return 'Catppuccin Macchiato'
+   end
+   return 'Catppuccin Latte'
+end
+
+local color_scheme = get_scheme_for_appearance(wezterm.gui.get_appearance())
 
 local backdrops = require('utils.backdrops')
 backdrops:scan_images_dir()
@@ -21,17 +27,25 @@ require('events.new-tab-button').setup()
 require('events.gui-startup').setup()
 
 wezterm.on('toggle-theme', function(window)
-   current_theme = current_theme == 'latte' and 'macchiato' or 'latte'
+   if color_scheme == 'Catppuccin Latte' then
+      color_scheme = 'Catppuccin Macchiato'
+   else
+      color_scheme = 'Catppuccin Latte'
+   end
    window:set_config_overrides({
-      colors = colors[current_theme],
+      color_scheme = color_scheme,
    })
-   backdrops:set_theme(current_theme)
+   local theme = color_scheme:find('Macchiato') and 'macchiato' or 'latte'
+   backdrops:set_theme(theme)
    backdrops:random(window)
 end)
 
+local schemes = wezterm.color.get_builtin_schemes()
+local fallback_bg = schemes[color_scheme]
+
 local bg = bg_options or {
    {
-      source = { Color = colors.latte.background },
+      source = { Color = fallback_bg.background },
       height = '100%',
       width = '100%',
    },
@@ -39,7 +53,7 @@ local bg = bg_options or {
 
 return Config:init()
    :append({
-      colors = colors.latte,
+      color_scheme = color_scheme,
       background = bg,
    })
    :append(require('config.appearance'))

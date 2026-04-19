@@ -13,11 +13,11 @@ return {
    default_cursor_style = 'BlinkingBlock',
    cursor_blink_rate = 650,
 
-   window_background_opacity = 0.95,
+   window_background_opacity = 0.98,
 
    enable_scroll_bar = true,
 
-   enable_tab_bar = false,
+   enable_tab_bar = true,
    hide_tab_bar_if_only_one_tab = false,
    use_fancy_tab_bar = false,
    tab_max_width = 25,
