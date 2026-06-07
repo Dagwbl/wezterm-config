@@ -13,7 +13,7 @@ return {
    default_cursor_style = 'BlinkingBlock',
    cursor_blink_rate = 650,
 
-   window_background_opacity = 0.95,
+   window_background_opacity = 0.99,
 
    enable_scroll_bar = true,
 

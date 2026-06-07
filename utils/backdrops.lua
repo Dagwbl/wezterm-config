@@ -95,7 +95,7 @@ function BackDrops:_gen_opts()
          source = { Color = colors.background },
          height = '100%',
          width = '100%',
-         opacity = self.current_opacity or 0.97,
+         opacity = self.current_opacity or 0.99,
       },
    }
 end

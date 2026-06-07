@@ -5,6 +5,31 @@ local act = wezterm.action
 
 local mod = {}
 
+local function is_vim(pane)
+   return pane:get_user_vars().IS_NVIM == 'true'
+end
+
+local direction_keys = {
+   h = 'Left',
+   j = 'Down',
+   k = 'Up',
+   l = 'Right',
+}
+
+local function split_nav(key)
+   return {
+      key = key,
+      mods = 'CTRL',
+      action = wezterm.action_callback(function(window, pane)
+         if is_vim(pane) then
+            window:perform_action({ SendKey = { key = key, mods = 'CTRL' } }, pane)
+         else
+            window:perform_action(act.ActivatePaneDirection(direction_keys[key]), pane)
+         end
+      end),
+   }
+end
+
 if platform.is_mac then
    mod.SUPER = 'SUPER'
    mod.SUPER_REV = 'SUPER|CTRL'
@@ -187,10 +212,10 @@ local keys = {
    { key = 'w',     mods = mod.SUPER,     action = act.CloseCurrentPane({ confirm = false }) },
 
    -- panes: navigation
-   { key = 'k',     mods = 'CTRL', action = act.ActivatePaneDirection('Up') },
-   { key = 'j',     mods = 'CTRL', action = act.ActivatePaneDirection('Down') },
-   { key = 'h',     mods = 'CTRL', action = act.ActivatePaneDirection('Left') },
-   { key = 'l',     mods = 'CTRL', action = act.ActivatePaneDirection('Right') },
+   split_nav('k'),
+   split_nav('j'),
+   split_nav('h'),
+   split_nav('l'),
    {
       key = 'p',
       mods = mod.SUPER_REV,
