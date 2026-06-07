@@ -6,7 +6,14 @@ local act = wezterm.action
 local mod = {}
 
 local function is_vim(pane)
-   return pane:get_user_vars().IS_NVIM == 'true'
+   if pane:get_user_vars().IS_NVIM == 'true' then
+      return true
+   end
+
+   local process_name = pane:get_foreground_process_name() or ''
+   process_name = string.gsub(process_name, '(.*[/\\])(.*)', '%2')
+   process_name = string.lower(process_name)
+   return process_name == 'nvim' or process_name == 'nvim.exe' or process_name == 'vim' or process_name == 'vim.exe'
 end
 
 local direction_keys = {
@@ -209,7 +216,6 @@ local keys = {
 
    -- panes: zoom+close pane
    { key = 'Enter', mods = mod.SUPER,     action = act.TogglePaneZoomState },
-   { key = 'w',     mods = mod.SUPER,     action = act.CloseCurrentPane({ confirm = false }) },
 
    -- panes: navigation
    split_nav('k'),
