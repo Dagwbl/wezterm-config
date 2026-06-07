@@ -1,12 +1,7 @@
 ---@type Wezterm
 local wezterm = require('wezterm')
-local schemes = wezterm.color.get_builtin_schemes()
-local colors = schemes['Catppuccin Latte']
-
--- Map theme name to built-in scheme name
-local function get_scheme_name(theme)
-   return theme == 'macchiato' and 'Catppuccin Macchiato' or 'Catppuccin Latte'
-end
+local theme = require('colors.theme')
+local colors = theme.colors(theme.default)
 
 -- Seeding random numbers before generating for use
 -- Known issue with lua math library
@@ -203,18 +198,12 @@ function BackDrops:set_img(window, idx)
    self:_set_opt(window, self:_gen_opts())
 end
 
-<<<<<<< HEAD
 ---Set the theme colors for background
 ---@param theme string 'latte' or 'macchiato'
 function BackDrops:set_theme(theme_name)
    colors = theme.colors(theme_name)
    -- Dark mode needs more transparency to see the background image
    self.current_opacity = theme_name == 'macchiato' and 0.99 or 0.99
-=======
-function BackDrops:set_theme(theme)
-   colors = schemes[get_scheme_name(theme)]
-   self.current_opacity = 0.97
->>>>>>> 09517d8168a5dbd1a7cf42969cd418c5b8612b1a
 end
 
 ---Toggle the focus mode

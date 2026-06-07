@@ -31,9 +31,6 @@ wezterm.on('toggle-theme', function(window)
    backdrops:random(window)
 end)
 
-local schemes = wezterm.color.get_builtin_schemes()
-local fallback_bg = schemes[color_scheme]
-
 local bg = bg_options or {
    {
       source = { Color = theme.colors(current_theme).background },
@@ -42,17 +39,10 @@ local bg = bg_options or {
    },
 }
 
-local tab_bar_colors = fallback_bg.tab_bar
-
 return Config:init()
    :append({
       color_scheme = theme.scheme_name(current_theme),
       background = bg,
-      colors = {
-         tab_bar = {
-            background = 'rgba(0, 0, 0, 0)',
-            },
-      },
    })
    :append(require('config.appearance'))
    :append(require('config.bindings'))

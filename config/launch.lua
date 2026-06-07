@@ -6,9 +6,8 @@ local options = {
 }
 
 if platform.is_win then
-   options.default_prog = { 'wsl.exe', '-d', 'Ubuntu-24.04' }
+   options.default_prog = { 'pwsh', '-NoLogo' }
    options.launch_menu = {
-      { label = 'Bash', args = { 'wsl.exe', '-d', 'Ubuntu-24.04' } },
       { label = 'PowerShell Core', args = { 'pwsh', '-NoLogo' } },
       { label = 'PowerShell Desktop', args = { 'powershell' } },
       { label = 'Command Prompt', args = { 'cmd' } },
