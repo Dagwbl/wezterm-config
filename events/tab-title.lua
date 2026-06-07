@@ -151,79 +151,68 @@ local RV = {
    { RS.scircle_left, RS.padding, RS.icon, RS.padding, RS.title, RS.padding, RS.progress, RS.padding, RS.unseen_output, RS.padding, RS.scircle_right },
 }
 
--- stylua: ignore
----@type table<string, Cells.SegmentColors>
-local colors = {
-   text_default          = { bg = '#dce0e8', fg = '#4c4c4c' },
-   text_hover            = { bg = '#ccd4e3', fg = '#4c4c4c' },
-   text_active           = { bg = '#1e66f5', fg = '#fdf6e3' },
+local wezterm = require('wezterm')
+local schemes = wezterm.color.get_builtin_schemes()
 
-   unseen_output_default = { bg = '#dce0e8', fg = '#fe640b' },
-   unseen_output_hover   = { bg = '#ccd4e3', fg = '#fe640b' },
-   unseen_output_active  = { bg = '#1e66f5', fg = '#fe640b' },
+local function get_colors(scheme_name)
+   local scheme = schemes[scheme_name]
+   local is_dark = scheme.background:lower():find('^#1[13]') or scheme.background:lower():find('^#0')
+   if is_dark then
+      return {
+         text_default          = { bg = scheme.ansi[4], fg = scheme.background },
+         text_hover            = { bg = scheme.overlay2, fg = scheme.background },
+         text_active           = { bg = scheme.ansi[5], fg = scheme.background },
 
-   scircle_default       = { bg = 'rgba(238, 232, 213, 0.4)', fg = '#dce0e8' },
-   scircle_hover         = { bg = 'rgba(238, 232, 213, 0.4)', fg = '#ccd4e3' },
-   scircle_active        = { bg = 'rgba(238, 232, 213, 0.4)', fg = '#1e66f5' },
+         unseen_output_default = { bg = scheme.ansi[4], fg = scheme.ansi[3] },
+         unseen_output_hover   = { bg = scheme.overlay2, fg = scheme.ansi[3] },
+         unseen_output_active  = { bg = scheme.ansi[5], fg = scheme.ansi[3] },
 
-   progress_percentage_default    = { bg = '#dce0e8', fg = '#40a02b' },
-   progress_percentage_hover      = { bg = '#ccd4e3', fg = '#40a02b' },
-   progress_percentage_active     = { bg = '#1e66f5', fg = '#40a02b' },
+         scircle_default       = { bg = 'rgba(0, 0, 0, 0)', fg = scheme.ansi[4] },
+         scircle_hover         = { bg = 'rgba(0, 0, 0, 0)', fg = scheme.overlay2 },
+         scircle_active        = { bg = 'rgba(0, 0, 0, 0)', fg = scheme.ansi[5] },
 
-   progress_error_default         = { bg = '#dce0e8', fg = '#d20f39' },
-   progress_error_hover           = { bg = '#ccd4e3', fg = '#d20f39' },
-   progress_error_active          = { bg = '#1e66f5', fg = '#d20f39' },
+         progress_percentage_default = { bg = scheme.ansi[4], fg = scheme.ansi[3] },
+         progress_percentage_hover   = { bg = scheme.overlay2, fg = scheme.ansi[3] },
+         progress_percentage_active  = { bg = scheme.ansi[5], fg = scheme.ansi[3] },
 
-   progress_indeterminate_default = { bg = '#dce0e8', fg = '#dc8a78' },
-   progress_indeterminate_hover   = { bg = '#ccd4e3', fg = '#dc8a78' },
-   progress_indeterminate_active  = { bg = '#1e66f5', fg = '#dc8a78' },
-}
+         progress_error_default    = { bg = scheme.ansi[4], fg = scheme.ansi[1] },
+         progress_error_hover      = { bg = scheme.overlay2, fg = scheme.ansi[1] },
+         progress_error_active   = { bg = scheme.ansi[5], fg = scheme.ansi[1] },
 
--- stylua: ignore
--- luacheck: ignore
----Render Variants
-local RV = {
-   { RS.scircle_left, RS.padding, RS.title, RS.padding, RS.scircle_right },
-   { RS.scircle_left, RS.padding, RS.title, RS.padding, RS.unseen_output, RS.padding, RS.scircle_right },
+         progress_indeterminate_default = { bg = scheme.ansi[4], fg = scheme.ansi[8] },
+         progress_indeterminate_hover   = { bg = scheme.overlay2, fg = scheme.ansi[8] },
+         progress_indeterminate_active = { bg = scheme.ansi[5], fg = scheme.ansi[8] },
+      }
+   else
+      return {
+         text_default          = { bg = scheme.surface0, fg = scheme.text },
+         text_hover            = { bg = scheme.surface1, fg = scheme.text },
+         text_active           = { bg = scheme.ansi[5], fg = scheme.background },
 
-   { RS.scircle_left, RS.padding, RS.title, RS.padding, RS.progress, RS.padding, RS.scircle_right },
-   { RS.scircle_left, RS.padding, RS.title, RS.padding, RS.progress, RS.padding, RS.unseen_output, RS.padding, RS.scircle_right },
+         unseen_output_default = { bg = scheme.surface0, fg = scheme.ansi[3] },
+         unseen_output_hover   = { bg = scheme.surface1, fg = scheme.ansi[3] },
+         unseen_output_active  = { bg = scheme.ansi[5], fg = scheme.ansi[3] },
 
-   { RS.scircle_left, RS.padding, RS.icon, RS.padding, RS.title, RS.padding, RS.scircle_right },
-   { RS.scircle_left, RS.padding, RS.icon, RS.padding, RS.title, RS.padding, RS.unseen_output, RS.padding, RS.scircle_right },
+         scircle_default       = { bg = 'rgba(238, 232, 213, 0)', fg = scheme.surface0 },
+         scircle_hover         = { bg = 'rgba(238, 232, 213, 0)', fg = scheme.surface1 },
+         scircle_active        = { bg = 'rgba(238, 232, 213, 0)', fg = scheme.ansi[5] },
 
-   { RS.scircle_left, RS.padding, RS.icon, RS.padding, RS.title, RS.padding, RS.progress, RS.padding, RS.scircle_right },
-   { RS.scircle_left, RS.padding, RS.icon, RS.padding, RS.title, RS.padding, RS.progress, RS.padding, RS.unseen_output, RS.padding, RS.scircle_right },
-}
+         progress_percentage_default = { bg = scheme.surface0, fg = scheme.ansi[3] },
+         progress_percentage_hover   = { bg = scheme.surface1, fg = scheme.ansi[3] },
+         progress_percentage_active  = { bg = scheme.ansi[5], fg = scheme.ansi[3] },
 
+         progress_error_default    = { bg = scheme.surface0, fg = scheme.ansi[1] },
+         progress_error_hover      = { bg = scheme.surface1, fg = scheme.ansi[1] },
+         progress_error_active   = { bg = scheme.ansi[5], fg = scheme.ansi[1] },
 
----@type table<string, Cells.SegmentColors>
--- stylua: ignore
-local colors = {
-   text_default          = { bg = '#45475A', fg = '#1C1B19' },
-   text_hover            = { bg = '#7188b0', fg = '#1C1B19' },
-   text_active           = { bg = '#89b4fa', fg = '#11111B' },
+         progress_indeterminate_default = { bg = scheme.surface0, fg = scheme.ansi[8] },
+         progress_indeterminate_hover   = { bg = scheme.surface1, fg = scheme.ansi[8] },
+         progress_indeterminate_active = { bg = scheme.ansi[5], fg = scheme.ansi[8] },
+      }
+   end
+end
 
-   unseen_output_default = { bg = '#45475A', fg = '#FFA066' },
-   unseen_output_hover   = { bg = '#7188b0', fg = '#FFA066' },
-   unseen_output_active  = { bg = '#89b4fa', fg = '#FFA066' },
-
-   scircle_default       = { bg = 'rgba(0, 0, 0, 0.4)', fg = '#45475A' },
-   scircle_hover         = { bg = 'rgba(0, 0, 0, 0.4)', fg = '#7188b0' },
-   scircle_active        = { bg = 'rgba(0, 0, 0, 0.4)', fg = '#89b4fa' },
-
-   progress_percentage_default    = { bg = '#45475A', fg = '#9df296' },
-   progress_percentage_hover      = { bg = '#7188b0', fg = '#9df296' },
-   progress_percentage_active     = { bg = '#89b4fa', fg = '#9df296' },
-
-   progress_error_default         = { bg = '#45475A', fg = '#fa3970' },
-   progress_error_hover           = { bg = '#7188b0', fg = '#fa3970' },
-   progress_error_active          = { bg = '#89b4fa', fg = '#fa3970' },
-
-   progress_indeterminate_default = { bg = '#45475A', fg = '#f5e0dc' },
-   progress_indeterminate_hover   = { bg = '#7188b0', fg = '#f5e0dc' },
-   progress_indeterminate_active  = { bg = '#89b4fa', fg = '#f5e0dc' },
-}
+local colors = get_colors('Catppuccin Latte')
 
 ---
 -- ================
