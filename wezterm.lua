@@ -1,11 +1,12 @@
 local Config = require('config')
 local wezterm = require('wezterm')
-local colors = require('colors.custom')
+local theme = require('colors.theme')
 
-local current_theme = 'latte'
+local current_theme = theme.default
 
 local backdrops = require('utils.backdrops')
 backdrops:scan_images_dir()
+backdrops:set_theme(current_theme)
 
 local bg_options = backdrops:initial_options({ no_img = false })
 backdrops:random()
@@ -22,16 +23,17 @@ require('events.gui-startup').setup()
 
 wezterm.on('toggle-theme', function(window)
    current_theme = current_theme == 'latte' and 'macchiato' or 'latte'
-   window:set_config_overrides({
-      colors = colors[current_theme],
-   })
+   local overrides = window:get_config_overrides() or {}
+   overrides.color_scheme = theme.scheme_name(current_theme)
+   window:set_config_overrides(overrides)
+
    backdrops:set_theme(current_theme)
    backdrops:random(window)
 end)
 
 local bg = bg_options or {
    {
-      source = { Color = colors.latte.background },
+      source = { Color = theme.colors(current_theme).background },
       height = '100%',
       width = '100%',
    },
@@ -39,7 +41,7 @@ local bg = bg_options or {
 
 return Config:init()
    :append({
-      colors = colors.latte,
+      color_scheme = theme.scheme_name(current_theme),
       background = bg,
    })
    :append(require('config.appearance'))

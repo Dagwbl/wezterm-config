@@ -1,7 +1,7 @@
 ---@type Wezterm
 local wezterm = require('wezterm')
-local custom_colors = require('colors.custom')
-local colors = custom_colors.latte
+local theme = require('colors.theme')
+local colors = theme.colors(theme.default)
 
 -- Seeding random numbers before generating for use
 -- Known issue with lua math library
@@ -132,10 +132,11 @@ end
 ---@param window Window WezTerm Window see: https://wezfurlong.org/wezterm/config/lua/window/index.html
 ---@param background_opts table background option
 function BackDrops:_set_opt(window, background_opts)
-   window:set_config_overrides({
-      background = background_opts,
-      enable_tab_bar = window:effective_config().enable_tab_bar,
-   })
+   local overrides = window:get_config_overrides() or {}
+   overrides.background = background_opts
+   overrides.enable_tab_bar = window:effective_config().enable_tab_bar
+
+   window:set_config_overrides(overrides)
 end
 
 ---Convert the `files` array to a table of `InputSelector` choices
@@ -199,10 +200,10 @@ end
 
 ---Set the theme colors for background
 ---@param theme string 'latte' or 'macchiato'
-function BackDrops:set_theme(theme)
-   colors = custom_colors[theme]
+function BackDrops:set_theme(theme_name)
+   colors = theme.colors(theme_name)
    -- Dark mode needs more transparency to see the background image
-   self.current_opacity = theme == 'macchiato' and 0.99 or 0.99
+   self.current_opacity = theme_name == 'macchiato' and 0.99 or 0.99
 end
 
 ---Toggle the focus mode

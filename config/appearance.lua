@@ -23,9 +23,8 @@ return {
    tab_max_width = 25,
    show_tab_index_in_tab_bar = false,
    switch_to_last_active_tab_when_closing_tab = true,
+   window_decorations = 'RESIZE',
 
-   command_palette_fg_color = '#4c4c4c',
-   command_palette_bg_color = '#eee8d5',
    command_palette_font_size = 14,
    command_palette_rows = 25,
 
@@ -37,9 +36,6 @@ return {
    },
    adjust_window_size_when_changing_font_size = false,
    window_close_confirmation = 'NeverPrompt',
-   window_frame = {
-      active_titlebar_bg = '#fdf5e0',
-   },
    inactive_pane_hsb = {
       saturation = 1,
       brightness = 1,
