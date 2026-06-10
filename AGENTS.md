@@ -7,41 +7,34 @@
 ## Structure
 | Directory | Purpose |
 |-----------|---------|
-| `config/` | Modular config modules (bindings, appearance, domains, fonts, launch, general) |
+| `config/` | Small plain config modules (appearance, domains, fonts, launch, general) |
 | `colors/` | Theme definitions (latte/macchiato variants) |
-| `events/` | Event handlers (left-status, right-status, tab-title, new-tab-button, gui-startup) |
-| `utils/` | Utilities (backdrops, gpu-adapter, str, math, cells, platform, opts-validator) |
-| `backdrops/` | Background images |
-| `wezterm.lua` | **Entry point** - loads all config modules |
+| `utils/` | Small utilities (platform detection only) |
+| `backdrops/` | Background images retained for optional future use, not loaded by default |
+| `perf-tests/` | Minimal diagnostic configs for frontend/rendering comparisons |
+| `wezterm.lua` | **Entry point** - plain `wezterm.config_builder()` setup |
 
 ## Linting & Formatting
 ```bash
-# Format (skip config/init.lua)
-stylua -g '!/config/init.lua' wezterm.lua colors/ config/ events/ utils/
+# Format
+stylua wezterm.lua colors/ config/ utils/ perf-tests/
 
 # Lint
-luacheck wezterm.lua colors/* config/* events/* utils/*
+luacheck wezterm.lua colors/* config/* utils/*
 ```
 
 Config: `.stylua.toml` (column_width=100, indent_width=3), `.luacheckrc` (max_line_length=150)
 
 ## Key Conventions
-- **SUPER key**: `Alt` on Windows/Linux, `Cmd` on macOS
-- **SUPER_REV**: `Alt+Ctrl` on Windows/Linux, `Cmd+Ctrl` on macOS
-- **LEADER**: `SUPER_REV+Space`
-- Theme toggle: `Alt+Shift+t` (cycles latte↔macchiato)
-- Background randomizer loaded at startup via `utils.backdrops`
+- Custom keybindings are intentionally minimal; only Vim-aware pane jumping is configured
+- Background images are not loaded by default; the default config uses a solid theme background
 
 ## Gotchas
-- `config/init.lua` is excluded from stylua (has special indentation)
-- `utils/backdrops.lua` has ignored luacheck code 212 (unreachable)
-- GPU adapter selector only works when `front_end = "WebGpu"` in appearance config
+- Rendering defaults prioritize smooth input on Windows: OpenGL, 60 FPS, no opacity, no cursor blink
+- Window size/location persistence is intentionally disabled to avoid input/rendering stutter
 
 ## Custom WezTerm APIs Used
 - `wezterm.config_builder()` - config chaining pattern
-- `wezterm.gui` - GUI detection
-- `wezterm.mux` - terminal multiplexing
-- `wezterm.plugin` - plugin system
 
 ## References
 - Official docs: https://wezfurlong.org/wezterm/config.html
