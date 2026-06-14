@@ -3,8 +3,10 @@ local platform = require('utils.platform')
 
 return {
    font = wezterm.font({
+      -- family = 'JetBrainsMono Nerd Font',
       family = 'Maple Mono NF CN',
       weight = 'Medium',
+      line_height = 1.15,
    }),
    font_size = platform.is_mac and 12 or 11,
    -- harfbuzz_features = {
